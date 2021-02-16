@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/js/showCart.js" defer></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <table class="table">
+      <tr>
+        <th>코드 분류</th>
+        <th>제목</th>
+        <th>설정</th>
+      </tr>
+      <% for(let i = 0; i < rows.length; i++) { let data = rows[i]; %>
+      <tr>
+        <td><%=productType[i]%></td>
+        <td>
+          <a href="/doyouwant"><%=data.board_title%></a>
+        </td>
+        <td>
+          <input type="button" value="삭제" class="delete" id="<%=i%>" />
+        </td>
+      </tr>
+      <%}%>
+    </table>
+  </body>
+</html>
