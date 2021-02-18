@@ -8,7 +8,7 @@ class Cart {
   async product() {
     const product = this.body;
     try {
-      const response = await CartStorage.getProduct(product);
+      const response = await CartStorage.existCart(product);
       return response;
     } catch (err) {
       return { success: false, msg: "값이 확실하지 않음" };

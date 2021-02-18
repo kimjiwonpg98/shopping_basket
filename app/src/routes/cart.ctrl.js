@@ -6,7 +6,8 @@ const output = {
   showCart: async (req, res, next) => {
     const student = new Cart(req.params.id);
     const response = await student.shoppingBasket();
-    return res.json(response);
+    if (!response.success) return res.status(409).json(response);
+    return res.status(200).json(response);
   },
   insertProduct: (req, res) => res.render("./insertProduct.ejs"),
 };
@@ -15,13 +16,15 @@ const process = {
   insertProduct: async (req, res, next) => {
     const addcart = new Cart(req.body);
     const response = await addcart.product();
-    return res.json(response);
+    if (!response.success) return res.status(400).json(response);
+    return res.status(200).json(response);
   },
 
   deleteProduct: async (req, res, next) => {
     const remove = new Cart(req.body);
     const response = await remove.productList();
-    return res.json(response);
+    if (!response.success) return res.status(409).json(response);
+    return res.status(200).json(response);
   },
 };
 

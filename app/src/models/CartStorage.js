@@ -23,24 +23,30 @@ class CartStorage {
     });
   }
   //장바구니 담는 코드
-  static getProduct(data) {
+  static existCart(data) {
     return new Promise((resolve, reject) => {
-      const sql = `INSERT INTO shopping_basket(board_code_no, student_id, board_no) VALUES(?, ?, ?)`;
       const existCart = `SELECT board_no, student_id FROM shopping_basket WHERE board_no=? AND student_id=?`;
-      const params = [data.board_code_no, data.student_id, data.board_no];
       const testParams = [data.board_no, data.student_id];
       db.query(existCart, testParams, (err, rows) => {
         if (err) throw err;
-        console.log(rows.length);
         if (!rows.length) {
-          db.query(sql, params, (err, rows) => {
-            if (err) reject({ success: false });
-            resolve({ success: true });
-          });
+          resolve(this.getProduct(data));
         } else resolve({ success: false, msg: "이미 장바구니에 저장" });
       });
     });
   }
+  //장바구니에 담는 코드
+  static getProduct(data) {
+    return new Promise((resolve, reject) => {
+      const sql = `INSERT INTO shopping_basket(board_code_no, student_id, board_no) VALUES(?, ?, ?)`;
+      const params = [data.board_code_no, data.student_id, data.board_no];
+      db.query(sql, params, (err, rows) => {
+        if (err) reject({ success: false });
+        resolve({ success: true });
+      });
+    });
+  }
+
   //장바구니 있는 물건 삭제
   static removeList(data) {
     return new Promise((resolve, reject) => {
